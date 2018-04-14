@@ -23,7 +23,7 @@ public class SynCoinsDataJob {
     @Autowired
     private SynCoinDataService synCoinDataService;
 
-    @Scheduled(cron = "0 40 20 1/1 * ?")
+    @Scheduled(cron = "0 22 22 1/1 * ?")
     public void process(){
         long startTime = Calendar.getInstance().getTimeInMillis();
 

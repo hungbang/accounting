@@ -41,7 +41,7 @@ public class SynCoinDataServiceImpl implements SynCoinDataService {
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource(coinlistDataPath).getFile());
         objectMapper.writeValue(file, coinsDataMappers);
-        //TODO: copy file syn data to original file
+
         File originalFile = new File(classLoader.getResource(original).getFile());
         com.google.common.io.Files.copy(file, originalFile);
     }
