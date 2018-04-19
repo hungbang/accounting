@@ -13,9 +13,11 @@ import java.util.List;
  */
 public interface SupportedCoinService {
 
-    List<CoinsDataMapper> getCoinsSupported() throws IOException;
+    <T> List<T> getCoinsSupported() throws IOException;
 
     CoinsDataMapper findCoinsByKeyword(String keyword) throws IOException, CoinsDataNotFoundException;
 
     CoinsDataResponseWrapper getPriceOfCoin(String keyword, BigDecimal amount) throws IOException, CoinsDataNotFoundException;
+
+
 }

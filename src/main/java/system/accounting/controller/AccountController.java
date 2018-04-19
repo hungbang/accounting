@@ -1,6 +1,7 @@
 package system.accounting.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,10 +20,11 @@ import java.math.BigDecimal;
  * Created by KAI on 4/14/18.
  */
 @RestController
-@RequestMapping("/api/accountants")
+@RequestMapping("/accountants")
 public class AccountController {
 
     @Autowired
+    @Qualifier("coinMarketCapService")
     private SupportedCoinService supportedCoinService;
 
     @GetMapping("/coins/supported")

@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
-@Service
+@Service("coinMarketCapService")
 public class SupportedCoinServiceImpl implements SupportedCoinService {
 
     @Value("${coinmarketcap.api.dataPath.original}")

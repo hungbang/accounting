@@ -1,5 +1,6 @@
 package system.accounting.service;
 
+import system.accounting.exception.CoinPriceNotFoundException;
 import system.accounting.exception.RestTemplateException;
 
 import java.io.IOException;
@@ -10,5 +11,7 @@ import java.io.IOException;
 public interface SynCoinDataService {
 
     void synCoinsData() throws RestTemplateException, IOException;
+    void synCoinsDataFromCoinCompare() throws RestTemplateException, IOException;
+    void getPrices() throws CoinPriceNotFoundException, IOException;
 
 }

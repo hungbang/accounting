@@ -3,6 +3,7 @@ package system.accounting.job;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import system.accounting.exception.RestTemplateException;
@@ -21,9 +22,10 @@ public class SynCoinsDataJob {
     public final static Logger LOGGER = LoggerFactory.getLogger(SynCoinsDataJob.class);
 
     @Autowired
+    @Qualifier("synCoinDataServiceImpl")
     private SynCoinDataService synCoinDataService;
 
-    @Scheduled(cron = "0 22 22 1/1 * ?")
+    @Scheduled(cron = "0/30 * * ? * *")
     public void process(){
         long startTime = Calendar.getInstance().getTimeInMillis();
 
