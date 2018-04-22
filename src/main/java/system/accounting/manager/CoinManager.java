@@ -9,6 +9,7 @@ import system.accounting.repository.CoinRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Created by KAI on 4/22/18.
@@ -21,8 +22,8 @@ public class CoinManager {
 
     public List<Coin> getAllCoins(String username) throws CoinNotFoundException {
 
-        List<Coin> coins =  coinRepository.findAllByUserId(username);
-        if(coins.isEmpty())
+        List<Coin> coins = coinRepository.findAllByUserId(username);
+        if (coins.isEmpty())
             throw new CoinNotFoundException();
 
         return coins;
@@ -30,8 +31,7 @@ public class CoinManager {
     }
 
     public Coin saveCoin(Coin coin) {
-        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        coin.setUserId(username);
+        coin.setId(UUID.randomUUID().toString());
         return coinRepository.save(coin);
     }
 }

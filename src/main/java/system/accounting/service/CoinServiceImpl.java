@@ -80,7 +80,8 @@ public class CoinServiceImpl implements CoinService {
             coin.setAmount(coinData.getAmount());
             coin.setCoinName(coinData.getCoinName());
             coin.setPriceBuy(coinData.getPriceBuy());
-            coin.setId(UUID.randomUUID().toString());
+            String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            coin.setUserId(username);
             Coin coinSaved = coinManager.saveCoin(coin);
             coins.add(coinSaved);
         });
