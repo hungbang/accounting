@@ -1,4 +1,4 @@
-package system.accounting.controller;
+package system.accounting.controller.nonAuthenticate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

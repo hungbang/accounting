@@ -1,4 +1,4 @@
-package system.accounting.controller;
+package system.accounting.controller.nonAuthenticate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -44,6 +44,7 @@ public class CoinController {
         CoinsDataResponseWrapper coinsDataResponseWrapper = coinService.getPriceOfCoin(keyword, amount);
         return ResponseEntity.ok(coinsDataResponseWrapper);
     }
+
 
 
 }

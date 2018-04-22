@@ -1,4 +1,4 @@
-package system.accounting.controller;
+package system.accounting.controller.nonAuthenticate;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;

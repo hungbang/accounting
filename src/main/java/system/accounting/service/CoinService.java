@@ -1,6 +1,9 @@
 package system.accounting.service;
 
+import system.accounting.domain.Coin;
+import system.accounting.exception.CoinNotFoundException;
 import system.accounting.exception.CoinsDataNotFoundException;
+import system.accounting.model.CoinRequestBody;
 import system.accounting.model.CoinsDataMapper;
 import system.accounting.model.CoinsDataResponseWrapper;
 
@@ -20,4 +23,7 @@ public interface CoinService {
 
     CoinsDataResponseWrapper getPriceOfCoin(String keyword, BigDecimal amount) throws IOException, CoinsDataNotFoundException;
 
+    <T> T getAllCoins() throws CoinNotFoundException;
+
+    <T> T saveAllCoins(CoinRequestBody coinRequestBody);
 }

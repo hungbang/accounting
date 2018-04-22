@@ -3,8 +3,10 @@ package system.accounting.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import system.accounting.exception.CoinNotFoundException;
 import system.accounting.exception.CoinsDataNotFoundException;
 import system.accounting.model.CoinList;
+import system.accounting.model.CoinRequestBody;
 import system.accounting.model.CoinsDataMapper;
 import system.accounting.model.CoinsDataResponseWrapper;
 import system.accounting.properties.CoinCompareProperties;
@@ -47,4 +49,15 @@ public class CoinCompareService implements CoinService {
     public CoinsDataResponseWrapper getPriceOfCoin(String keyword, BigDecimal amount) throws IOException, CoinsDataNotFoundException {
         return null;
     }
+
+    @Override
+    public <T> T getAllCoins() throws CoinNotFoundException {
+        return null;
+    }
+
+    @Override
+    public <T> T saveAllCoins(CoinRequestBody coinRequestBody) {
+        return null;
+    }
+
 }

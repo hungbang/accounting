@@ -2,8 +2,14 @@ package system.accounting.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import system.accounting.domain.Coin;
+import system.accounting.exception.CoinNotFoundException;
 import system.accounting.exception.CoinsDataNotFoundException;
+import system.accounting.manager.CoinManager;
+import system.accounting.model.CoinRequestBody;
 import system.accounting.model.CoinsDataMapper;
 import system.accounting.model.CoinsDataResponseWrapper;
 import system.accounting.properties.CoinMarketCapProperties;
@@ -11,8 +17,10 @@ import system.accounting.properties.CoinMarketCapProperties;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Service("coinMarketCapService")
 public class CoinServiceImpl implements CoinService {
@@ -20,6 +28,9 @@ public class CoinServiceImpl implements CoinService {
 
     @Autowired
     private CoinMarketCapProperties coinMarketCapProperties;
+
+    @Autowired
+    private CoinManager coinManager;
 
     @Override
     public List<CoinsDataMapper> getCoinsSupported() throws IOException {
@@ -33,15 +44,47 @@ public class CoinServiceImpl implements CoinService {
     @Override
     public CoinsDataMapper findCoinsByKeyword(String keyword) throws IOException, CoinsDataNotFoundException {
         List<CoinsDataMapper> coinsDataMappers = this.getCoinsSupported();
-        return coinsDataMappers.stream().filter(var0 -> var0.getId().equalsIgnoreCase(keyword) || var0.getSymbol().equalsIgnoreCase(keyword)).findFirst().orElseThrow(() ->new CoinsDataNotFoundException());
+        return coinsDataMappers.stream().filter(var0 -> var0.getId().equalsIgnoreCase(keyword) || var0.getSymbol().equalsIgnoreCase(keyword)).findFirst().orElseThrow(() -> new CoinsDataNotFoundException());
     }
 
     @Override
     public CoinsDataResponseWrapper getPriceOfCoin(String keyword, BigDecimal amount) throws IOException, CoinsDataNotFoundException {
         CoinsDataMapper coinsDataMapper = this.findCoinsByKeyword(keyword);
         BigDecimal price = new BigDecimal(coinsDataMapper.getPriceUsd());
-        BigDecimal totalUsd = amount.multiply(price).setScale(2, BigDecimal.ROUND_HALF_UP);
+        BigDecimal totalUsd = amount.multiply(price).setScale(8, BigDecimal.ROUND_HALF_UP);
         return parseCoinsDataResponseWrapper(coinsDataMapper, totalUsd);
+    }
+
+    @Override
+    public <T> T getAllCoins() throws CoinNotFoundException {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Coin> coins = coinManager.getAllCoins(username);
+        return (T) coins;
+    }
+
+    @Override
+    @Transactional
+    public <T> T saveAllCoins(CoinRequestBody coinRequestBody) {
+        return (T) saveCoins(coinRequestBody);
+    }
+
+
+    private List<Coin> saveCoins(CoinRequestBody coinRequestBody) {
+        List<Coin> coins = new ArrayList<>();
+        List<CoinRequestBody.CoinData> coinDatas = coinRequestBody.getCoinDatas();
+        if(coinDatas.isEmpty())
+            return null;
+
+        coinDatas.stream().forEach(coinData -> {
+            Coin coin = new Coin();
+            coin.setAmount(coinData.getAmount());
+            coin.setCoinName(coinData.getCoinName());
+            coin.setPriceBuy(coinData.getPriceBuy());
+            coin.setId(UUID.randomUUID().toString());
+            Coin coinSaved = coinManager.saveCoin(coin);
+            coins.add(coinSaved);
+        });
+        return coins;
     }
 
     private CoinsDataResponseWrapper parseCoinsDataResponseWrapper(CoinsDataMapper coinsDataMapper, BigDecimal total) {
@@ -50,4 +93,6 @@ public class CoinServiceImpl implements CoinService {
         coinsDataResponseWrapper.setTotalUsd(total);
         return coinsDataResponseWrapper;
     }
+
+
 }
