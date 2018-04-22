@@ -1,11 +1,12 @@
 package system.accounting.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import system.accounting.exception.CoinsDataNotFoundException;
 import system.accounting.model.CoinsDataMapper;
 import system.accounting.model.CoinsDataResponseWrapper;
+import system.accounting.properties.CoinMarketCapProperties;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,16 +15,17 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service("coinMarketCapService")
-public class SupportedCoinServiceImpl implements SupportedCoinService {
+public class CoinServiceImpl implements CoinService {
 
-    @Value("${coinmarketcap.api.dataPath.original}")
-    private String original;
+
+    @Autowired
+    private CoinMarketCapProperties coinMarketCapProperties;
 
     @Override
     public List<CoinsDataMapper> getCoinsSupported() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource(original).getFile());
+        File file = new File(classLoader.getResource(coinMarketCapProperties.getApi().getDataJson().getCoins()).getFile());
         List<CoinsDataMapper> coinsDataMapper = Arrays.asList(objectMapper.readValue(file, CoinsDataMapper[].class));
         return coinsDataMapper;
     }

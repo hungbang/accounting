@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import system.accounting.exception.CoinsDataNotFoundException;
 import system.accounting.exception.RestTemplateException;
-import system.accounting.service.SynCoinDataService;
+import system.accounting.service.PullDataService;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -17,13 +18,13 @@ import java.util.Date;
  * Created by KAI on 4/14/18.
  */
 @Component
-public class SynCoinsDataJob {
+public class PullDataFromCMKJob {
 
-    public final static Logger LOGGER = LoggerFactory.getLogger(SynCoinsDataJob.class);
+    public final static Logger LOGGER = LoggerFactory.getLogger(PullDataFromCMKJob.class);
 
     @Autowired
     @Qualifier("synCoinDataServiceImpl")
-    private SynCoinDataService synCoinDataService;
+    private PullDataService synCoinDataService;
 
     @Scheduled(cron = "0/30 * * ? * *")
     public void process(){
@@ -32,12 +33,14 @@ public class SynCoinsDataJob {
         LOGGER.info("BEGIN scheduling to syn data from coin market : "+ new Date(startTime));
 
         try {
-            synCoinDataService.synCoinsData();
+            synCoinDataService.synDataFromCMK();
         } catch (RestTemplateException e) {
             LOGGER.error("Error occurs when call to coin market cap." + e.getMessage(), e);
         } catch (IOException e) {
             LOGGER.error("Got data from coin market successful but ...");
             LOGGER.error("Error occurs when write json to file." + e.getMessage(), e);
+        } catch (CoinsDataNotFoundException e) {
+            LOGGER.error("Error occurs when call to cryptocompare cap." + e.getMessage(), e);
         }
 
         long endTime = Calendar.getInstance().getTimeInMillis();
