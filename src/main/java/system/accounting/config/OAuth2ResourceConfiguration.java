@@ -1,6 +1,7 @@
 package system.accounting.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,10 +28,12 @@ public class OAuth2ResourceConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
+                .anonymous().disable()
                 .cors().disable().authorizeRequests()
-                .antMatchers("/protected/**").authenticated();
+                .antMatchers("/api/protected/**").authenticated();
     }
 
+    @Bean
     public RemoteTokenServices remoteTokenServices(){
         RemoteTokenServices remoteTokenServices = new RemoteTokenServices();
         remoteTokenServices.setCheckTokenEndpointUrl(environment.getProperty("checkTokenEndpointUrl"));

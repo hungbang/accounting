@@ -30,7 +30,7 @@ public class PullDataFromCMKJob {
     public void process(){
         long startTime = Calendar.getInstance().getTimeInMillis();
 
-        LOGGER.info("BEGIN scheduling to syn data from coin market : "+ new Date(startTime));
+        LOGGER.debug("BEGIN scheduling to syn data from coin market : "+ new Date(startTime));
 
         try {
             synCoinDataService.synDataFromCMK();
@@ -44,7 +44,7 @@ public class PullDataFromCMKJob {
         }
 
         long endTime = Calendar.getInstance().getTimeInMillis();
-        LOGGER.info("Scheduling to syn data from coin market SUCCESSFUL : "+ new Date(endTime));
+        LOGGER.debug("Scheduling to syn data from coin market SUCCESSFUL : "+ new Date(endTime));
     }
 
 }

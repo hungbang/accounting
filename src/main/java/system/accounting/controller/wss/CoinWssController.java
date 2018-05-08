@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.util.HtmlUtils;
 import system.accounting.model.CoinsDataMapper;
 import system.accounting.model.WrapperCoinResponseBody;
+import system.accounting.properties.AccountantAppProperties;
 import system.accounting.service.CoinService;
 
 import java.util.List;
@@ -27,6 +28,10 @@ public class CoinWssController {
     private CoinService coinService;
 
 
+    @Autowired
+    private AccountantAppProperties accountantAppProperties;
+
+
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
     public String  greeting(String message) throws Exception {
@@ -35,8 +40,8 @@ public class CoinWssController {
     }
 
 
-    @MessageMapping("/getCryptoCurrencies")
-    @SendTo("/topic/cryptoCurrencies")
+    @MessageMapping("/pullPrice")
+    @SendTo("/stock/price")
     public WrapperCoinResponseBody getAllCryptoCurrenies() throws Exception {
         Thread.sleep(1000); // simulated delay
         List<CoinsDataMapper> coinsDataMappers = coinService.getCoinsSupported();

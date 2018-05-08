@@ -23,6 +23,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<oauth.version>2.3.2.RELEASE</oauth.version>
+		<javamelody.version>1.72.0</javamelody.version>
 	</properties>
 
 	<dependencies>
@@ -161,6 +162,12 @@
 			<version>3.1.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>net.bull.javamelody</groupId>
+			<artifactId>javamelody-spring-boot-starter</artifactId>
+			<version>${javamelody.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -170,8 +177,134 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-maven-plugin</artifactId>
+				<version>3.5.0</version>
+				<executions>
+					<execution>
+						<id>liquibase-accounting-system-update</id>
+						<configuration>
+							<propertyFile>target/classes/liquibase-${build.profile.id}.properties
+							</propertyFile>
+							<changeLogFile>target/classes/db/changelog/db.changelog-master.xml
+							</changeLogFile>
+							<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+						</configuration>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>update</goal>
+						</goals>
+					</execution>
+
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>local</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+
+			<properties>
+				<build.profile.id>local</build.profile.id>
+			</properties>
+			<build>
+				<filters>
+					<filter>profiles/config-local.properties</filter>
+				</filters>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+						<includes>
+							<include>**/*.properties</include>
+							<include>**/*.xml</include>
+						</includes>
+					</resource>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>false</filtering>
+						<excludes>
+							<exclude>**/*.properties</exclude>
+							<exclude>**/*.xml</exclude>
+						</excludes>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<build.profile.id>dev</build.profile.id>
+			</properties>
+			<build>
+				<filters>
+					<filter>profiles/config-dev.properties</filter>
+				</filters>
+
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+						<includes>
+							<include>**/*.properties</include>
+							<include>**/*.xml</include>
+						</includes>
+					</resource>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>false</filtering>
+						<excludes>
+							<exclude>**/*.properties</exclude>
+							<exclude>**/*.xml</exclude>
+						</excludes>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+
+		<profile>
+			<id>prod</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<build.profile.id>prod</build.profile.id>
+			</properties>
+			<build>
+				<filters>
+					<filter>profiles/config-prod.properties</filter>
+				</filters>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+						<includes>
+							<include>**/*.properties</include>
+							<include>**/*.xml</include>
+						</includes>
+					</resource>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>false</filtering>
+						<excludes>
+							<exclude>**/*.properties</exclude>
+							<exclude>**/*.xml</exclude>
+						</excludes>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+	</profiles>
 
 
 </project>

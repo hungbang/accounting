@@ -13,14 +13,12 @@ import system.accounting.model.CoinRequestBody;
 import system.accounting.model.CoinsDataMapper;
 import system.accounting.model.CoinsDataResponseWrapper;
 import system.accounting.properties.CoinMarketCapProperties;
+import system.accounting.repository.CoinRepository;
 
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service("coinMarketCapService")
 public class CoinServiceImpl implements CoinService {
@@ -31,6 +29,9 @@ public class CoinServiceImpl implements CoinService {
 
     @Autowired
     private CoinManager coinManager;
+
+    @Autowired
+    private CoinRepository coinRepository;
 
     @Override
     public List<CoinsDataMapper> getCoinsSupported() throws IOException {
@@ -68,6 +69,13 @@ public class CoinServiceImpl implements CoinService {
         return (T) saveCoins(coinRequestBody);
     }
 
+    @Override
+    public void delete(String id) {
+        Optional<Coin> coinOptional = coinRepository.findById(id);
+        if(coinOptional.isPresent())
+            coinRepository.delete(coinOptional.get());
+    }
+
 
     private List<Coin> saveCoins(CoinRequestBody coinRequestBody) {
         List<Coin> coins = new ArrayList<>();
@@ -82,6 +90,7 @@ public class CoinServiceImpl implements CoinService {
             coin.setPriceBuy(coinData.getPriceBuy());
             String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             coin.setUserId(username);
+            coin.setId(coinData.getId());
             Coin coinSaved = coinManager.saveCoin(coin);
             coins.add(coinSaved);
         });

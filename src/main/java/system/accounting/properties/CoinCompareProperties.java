@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by KAI on 4/22/18.
  */
-@ConfigurationProperties(prefix = "coincompare", ignoreInvalidFields = false)
+@ConfigurationProperties(prefix = "coincompare")
 @PropertySource("classpath:accountant.properties")
 @Component
 public class CoinCompareProperties {
@@ -29,7 +29,7 @@ public class CoinCompareProperties {
         private String ticket;
         private final CoinCompareProperties.DataJson dataJson = new CoinCompareProperties.DataJson();
 
-        public CoinCompareProperties.DataJson getDataJson(){
+        public CoinCompareProperties.DataJson getDataJson() {
             return this.dataJson;
         }
 

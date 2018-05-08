@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 /**
  * Created by KAI on 4/22/18.
  */
-@ConfigurationProperties(prefix = "coinmarketcap", ignoreInvalidFields = false)
+@ConfigurationProperties(prefix = "coinmarketcap")
 @PropertySource("classpath:accountant.properties")
 @Configuration
 public class CoinMarketCapProperties {

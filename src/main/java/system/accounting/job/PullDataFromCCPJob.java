@@ -33,25 +33,19 @@ public class PullDataFromCCPJob {
     public void process(){
         long startTime = Calendar.getInstance().getTimeInMillis();
 
-        LOGGER.info("BEGIN scheduling to syn data from coin compare : "+ new Date(startTime));
+        LOGGER.debug("BEGIN scheduling to syn data from coin compare : "+ new Date(startTime));
 
         try {
             synCoinDataService.synDataFromCCP();
-//            LOGGER.info("BEGIN GET COIN PRICE : "+ new Date(startTime));
-//            poloniexPriceService.getPrices();
-//            LOGGER.info("GET COIN PRICE SUCCESS: "+ new Date(startTime));
         } catch (RestTemplateException e) {
             LOGGER.error("Error occurs when call to coin compare cap." + e.getMessage(), e);
         } catch (IOException e) {
             LOGGER.error("Got data from coin compare successful but ...");
             LOGGER.error("Error occurs when write json to file." + e.getMessage(), e);
         }
-//        catch (CoinPriceNotFoundException e) {
-//            LOGGER.error("CoinPriceNotFoundException...." + e.getMessage(), e);
-//        }
 
         long endTime = Calendar.getInstance().getTimeInMillis();
-        LOGGER.info("Scheduling to syn data from coin compare SUCCESSFUL : "+ new Date(endTime));
+        LOGGER.debug("Scheduling to syn data from coin compare SUCCESSFUL : "+ new Date(endTime));
     }
 
 }

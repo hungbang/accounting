@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ErrorHandler {
 
-    @ExceptionHandler
+    @ExceptionHandler(CoinNotFoundException.class)
     public ResponseEntity handlingCoinNotFoundException(CoinNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new WrapperErrorResponse("Coin data not found", "Coin data not found"));
+        return ResponseEntity.noContent().build();
     }
 
 }

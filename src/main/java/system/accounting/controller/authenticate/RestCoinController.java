@@ -15,14 +15,14 @@ import java.util.List;
  * Created by KAI on 4/22/18.
  */
 @RestController
-@RequestMapping("/protected")
+@RequestMapping("/api/protected")
 public class RestCoinController {
 
     @Autowired
     @Qualifier("coinMarketCapService")
     private CoinService coinService;
 
-    @GetMapping("/coins")
+    @GetMapping(value = "/coins")
     public ResponseEntity getAllCoinsByUser() throws CoinNotFoundException {
        List<Coin> coins = coinService.getAllCoins();
        return ResponseEntity.ok(coins);
@@ -34,5 +34,12 @@ public class RestCoinController {
         List<Coin> coins = coinService.saveAllCoins(coinRequestBodys);
         return ResponseEntity.ok(coins);
     }
+
+    @DeleteMapping("/coins/{id}")
+    public ResponseEntity deleteCoins(@PathVariable String id) {
+        coinService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 
 }

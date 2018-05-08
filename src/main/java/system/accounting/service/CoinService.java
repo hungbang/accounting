@@ -1,6 +1,5 @@
 package system.accounting.service;
 
-import system.accounting.domain.Coin;
 import system.accounting.exception.CoinNotFoundException;
 import system.accounting.exception.CoinsDataNotFoundException;
 import system.accounting.model.CoinRequestBody;
@@ -9,8 +8,6 @@ import system.accounting.model.CoinsDataResponseWrapper;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by KAI on 4/14/18.
@@ -26,4 +23,6 @@ public interface CoinService {
     <T> T getAllCoins() throws CoinNotFoundException;
 
     <T> T saveAllCoins(CoinRequestBody coinRequestBody);
+
+    void  delete(String id);
 }

@@ -27,7 +27,7 @@ public class CoinController {
     @Qualifier("coinMarketCapService")
     private CoinService coinService;
 
-    @GetMapping("/coins/supported")
+    @GetMapping(value = "/coins/supported")
     public ResponseEntity supportedCoins() throws IOException, CoinsDataNotFoundException {
         return ResponseEntity.ok(coinService.getCoinsSupported());
     }

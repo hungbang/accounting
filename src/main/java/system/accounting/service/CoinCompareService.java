@@ -60,4 +60,9 @@ public class CoinCompareService implements CoinService {
         return null;
     }
 
+    @Override
+    public void delete(String id) {
+
+    }
+
 }

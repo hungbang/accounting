@@ -1,0 +1,7 @@
+Update : java -jar liquibase.jar --classpath=mysql-connector-java-5.1.26.jar --defaultsFile=<path>.properties update
+GenerateChangeLog (get structure): java -jar liquibase.jar --classpath=mysql-connector-java-5.1.26.jar --changeLogFile=<fileName>.xml
+                    --defaultsFile=<path>.properties generateChangeLog
+GenerateChangeLog (get data) : java -jar liquibase.jar --classpath=mysql-connector-java-5.1.26.jar --changeLogFile=<fileName>.xml
+                    --defaultsFile=<path>.properties --diffTypes=data generateChangeLog
+
+                    java -jar liquibase.jar --classpath=mysql-connector-java-5.1.26.jar --changeLogFile=output.xml --defaultsFile=liquibase-local.properties generateChangeLog

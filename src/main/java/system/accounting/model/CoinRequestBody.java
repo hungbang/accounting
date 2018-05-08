@@ -2,7 +2,6 @@ package system.accounting.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -23,8 +22,8 @@ public class CoinRequestBody {
     private List<CoinData> coinDatas;
 
     public static class CoinData {
-
-
+        
+        private String id;
         private BigDecimal amount;
         private String coinName;
         private BigDecimal priceBuy;
@@ -51,6 +50,14 @@ public class CoinRequestBody {
 
         public void setPriceBuy(BigDecimal priceBuy) {
             this.priceBuy = priceBuy;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
         }
     }
 }

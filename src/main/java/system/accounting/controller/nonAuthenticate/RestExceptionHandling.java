@@ -20,8 +20,7 @@ public class RestExceptionHandling {
     @ExceptionHandler(CoinsDataNotFoundException.class)
     public ResponseEntity handlingCoinsDataNotFoundException(CoinsDataNotFoundException e){
         LOGGER.error("CoinsData is not found : "+ e.getMessage(), e);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponseWrapper("CoinsData is not found.", "CoinsData is not found."));
+        return ResponseEntity.noContent().build();
     }
-
 
 }

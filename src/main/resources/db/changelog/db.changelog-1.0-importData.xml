@@ -1,0 +1,59 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="KAI (generated)" id="1524154581039-1">
+        <insert tableName="auth_user">
+            <column name="id" value="1ba00bda-438b-11e8-842f-0ed5f89f718b"/>
+            <column name="username" value="hungbang"/>
+            <column name="password" value="$2a$10$E7dD0Xqu1qPB3h7x3xqqjO1BFxEm1UiUbPWU24cFZ0oUOTMvDZ67y"/>
+            <column name="account_non_expired" valueBoolean="false"/>
+            <column name="account_non_locked" valueBoolean="false"/>
+            <column name="credentials_non_expired" valueBoolean="false"/>
+            <column name="enabled" valueBoolean="false"/>
+            <column name="created_at" valueDate="2018-04-19 11:36:37.0"/>
+            <column name="last_updated_at" valueDate="2018-04-19 11:36:37.0"/>
+            <column name="version" valueNumeric="1"/>
+        </insert>
+        <insert tableName="auth_user">
+            <column name="id" value="bd036b15-2d58-47e6-a8fa-cc74c032755c"/>
+            <column name="username" value="quanhungbang@gmail.com"/>
+            <column name="password" value="$2a$10$eJ1/LIcA6oW8OGZgJtjdK.wMtHvA6NFwoz6urKjo/2PtdLsB17TWG"/>
+            <column name="account_non_expired" valueBoolean="true"/>
+            <column name="account_non_locked" valueBoolean="true"/>
+            <column name="credentials_non_expired" valueBoolean="true"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="created_at"/>
+            <column name="last_updated_at"/>
+            <column name="version" valueNumeric="0"/>
+        </insert>
+        <insert tableName="auth_user">
+            <column name="id" value="eb950216-bf5d-4d00-8c04-7f8eb061cd7a"/>
+            <column name="username" value="quanhungbang+1@gmail.com"/>
+            <column name="password" value="$2a$10$t2lHPYcTInBNYfIvWcK4S.qKqvnOtbneQz5g/BDV/eoLs8W8gpQeK"/>
+            <column name="account_non_expired" valueBoolean="true"/>
+            <column name="account_non_locked" valueBoolean="true"/>
+            <column name="credentials_non_expired" valueBoolean="true"/>
+            <column name="enabled" valueBoolean="false"/>
+            <column name="created_at"/>
+            <column name="last_updated_at"/>
+            <column name="version" valueNumeric="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="KAI (generated)" id="1524154581039-2">
+        <insert tableName="oauth_client_details">
+            <column name="client_id" value="accountant-client"/>
+            <column name="resource_ids" value="oauth2-resource"/>
+            <column name="client_secret" value="$2a$10$Ybt2tv.EzmbGZ69y2AAKNOnfgyJJAp.pV5z37ktE5tm3MyfFbRsom"/>
+            <column name="scope" value="read,write,trust"/>
+            <column name="authorized_grant_types" value="client-credentials,password,refresh_token"/>
+            <column name="web_server_redirect_uri"/>
+            <column name="authorities" value="ROLE_CLIENT,ROLE_ANDROID_CLIENT"/>
+            <column name="access_token_validity" valueNumeric="3600"/>
+            <column name="refresh_token_validity" valueNumeric="36800"/>
+            <column name="additional_information"/>
+            <column name="autoapprove"/>
+            <column name="created_at" valueDate="2018-04-19 22:54:35.0"/>
+            <column name="last_updated_at" valueDate="2018-04-19 22:54:35.0"/>
+            <column name="version" valueNumeric="0"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
