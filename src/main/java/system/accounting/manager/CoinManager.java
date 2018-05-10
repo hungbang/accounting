@@ -3,6 +3,7 @@ package system.accounting.manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import system.accounting.domain.Coin;
 import system.accounting.exception.CoinNotFoundException;
 import system.accounting.repository.CoinRepository;
@@ -28,6 +29,7 @@ public class CoinManager {
         return coins;
     }
 
+    @Transactional
     public Coin saveCoin(Coin coin) {
         return coinRepository.save(coin);
     }

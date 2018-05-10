@@ -64,7 +64,6 @@ public class CoinServiceImpl implements CoinService {
     }
 
     @Override
-    @Transactional
     public <T> T saveAllCoins(CoinRequestBody coinRequestBody) {
         return (T) saveCoins(coinRequestBody);
     }
