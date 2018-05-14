@@ -1,8 +1,10 @@
 package system.accounting.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import system.accounting.domain.Coin;
@@ -20,7 +22,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 
-@Service("coinMarketCapService")
+@Component("coinMarketCapService")
 public class CoinServiceImpl implements CoinService {
 
 
@@ -84,13 +86,13 @@ public class CoinServiceImpl implements CoinService {
 
         coinDatas.stream().forEach(coinData -> {
             Coin coin = new Coin();
-            coin.setAmount(coinData.getAmount());
+            coin.setAmount(NumberUtils.createBigDecimal(coinData.getAmount()));
             coin.setCoinName(coinData.getCoinName());
-            coin.setPriceBuy(coinData.getPriceBuy());
+            coin.setPriceBuy(NumberUtils.createBigDecimal(coinData.getPriceBuy()));
             String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             coin.setUserId(username);
             coin.setId(coinData.getId());
-            Coin coinSaved = coinManager.saveCoin(coin);
+            Coin coinSaved = coinManager.bulkSaveOrUpdate(coin);
             coins.add(coinSaved);
         });
         return coins;

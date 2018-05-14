@@ -48,6 +48,14 @@ public class CoinWssController {
         return new WrapperCoinResponseBody(coinsDataMappers);
     }
 
+//    @MessageMapping("/pullPrice")
+//    @SendTo("/stock/users/coins")
+//    public WrapperCoinResponseBody getAllCryptoCurrenies() throws Exception {
+//        Thread.sleep(1000); // simulated delay
+//        List<CoinsDataMapper> coinsDataMappers = coinService.getCoinsSupported();
+//        return new WrapperCoinResponseBody(coinsDataMappers);
+//    }
+
 
 
 

@@ -1,5 +1,7 @@
 package system.accounting.controller.authenticate;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +21,12 @@ import java.util.List;
 public class RestCoinController {
 
     @Autowired
-    @Qualifier("coinMarketCapService")
+    @Qualifier("coinCollectionServiceImpl")
     private CoinService coinService;
 
     @GetMapping(value = "/coins")
+    @ApiImplicitParams(
+            { @ApiImplicitParam(name = "Authorization", paramType = "header") })
     public ResponseEntity getAllCoinsByUser() throws CoinNotFoundException {
        List<Coin> coins = coinService.getAllCoins();
        return ResponseEntity.ok(coins);
@@ -30,12 +34,16 @@ public class RestCoinController {
 
 
     @PostMapping("/coins")
+    @ApiImplicitParams(
+            { @ApiImplicitParam(name = "Authorization", paramType = "header") })
     public ResponseEntity saveAllCoinByUser(@RequestBody CoinRequestBody coinRequestBodys) throws CoinNotFoundException {
         List<Coin> coins = coinService.saveAllCoins(coinRequestBodys);
         return ResponseEntity.ok(coins);
     }
 
     @DeleteMapping("/coins/{id}")
+    @ApiImplicitParams(
+            { @ApiImplicitParam(name = "Authorization", paramType = "header") })
     public ResponseEntity deleteCoins(@PathVariable String id) {
         coinService.delete(id);
         return ResponseEntity.noContent().build();

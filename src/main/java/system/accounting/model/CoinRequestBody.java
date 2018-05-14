@@ -1,8 +1,8 @@
 package system.accounting.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.dozer.Mapping;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -22,17 +22,27 @@ public class CoinRequestBody {
     private List<CoinData> coinDatas;
 
     public static class CoinData {
-        
-        private String id;
-        private BigDecimal amount;
-        private String coinName;
-        private BigDecimal priceBuy;
 
-        public BigDecimal getAmount() {
+        @Mapping("id")
+        private String id;
+
+
+        @Mapping("amount")
+        private String amount;
+
+
+        @Mapping("coinName")
+        private String coinName;
+
+
+        @Mapping("priceBuy")
+        private String priceBuy;
+
+        public String getAmount() {
             return amount;
         }
 
-        public void setAmount(BigDecimal amount) {
+        public void setAmount(String amount) {
             this.amount = amount;
         }
 
@@ -44,11 +54,11 @@ public class CoinRequestBody {
             this.coinName = coinName;
         }
 
-        public BigDecimal getPriceBuy() {
+        public String getPriceBuy() {
             return priceBuy;
         }
 
-        public void setPriceBuy(BigDecimal priceBuy) {
+        public void setPriceBuy(String priceBuy) {
             this.priceBuy = priceBuy;
         }
 

@@ -27,6 +27,13 @@ public class AccountantAppProperties {
         ;
 
         public static class Wss {
+
+            private AccountantAppProperties.Accountant.Wss.Stock stock = new AccountantAppProperties.Accountant.Wss.Stock();
+
+            public AccountantAppProperties.Accountant.Wss.Stock getStock(){
+                return stock;
+            }
+
             public String getSendTo() {
                 return sendTo;
             }
@@ -36,6 +43,18 @@ public class AccountantAppProperties {
             }
 
             private String sendTo;
+
+            public static class Stock {
+                public String getUserscoinnew() {
+                    return userscoinnew;
+                }
+
+                public void setUserscoinnew(String userscoinnew) {
+                    this.userscoinnew = userscoinnew;
+                }
+
+                private String userscoinnew;
+            }
         }
     }
 }
